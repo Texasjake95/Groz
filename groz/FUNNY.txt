@@ -1,0 +1,72 @@
+Bat
+Base Attack: 3
+Critical Hit!
+Attack: 3
+Defense: 2
+Base Attack: 0
+Critical Hit!
+Attack: 0
+Defense: 0
+Base Attack: 1
+Critical Hit!
+Attack: 1
+Defense: 1
+Base Attack: 1
+Critical Hit!
+Attack: 1
+Defense: 8
+Base Attack: 0
+Critical Hit!
+Attack: 0
+Defense: 0
+Base Attack: 0
+Attack: 0
+Defense: 2
+Base Attack: 1
+Attack: 1
+Defense: 2
+Base Attack: 2
+Critical Hit!
+Attack: 2
+Defense: 7
+Base Attack: 7
+Critical Hit!
+Attack: 8
+Defense: 1
+Bat is dead
+Base Attack: 0
+Critical Hit!
+Attack: 0
+Defense: 0
+Bat is dead
+Base Attack: 3
+Critical Hit!
+Attack: 3
+Defense: 1
+Bat is dead
+Base Attack: 3
+Critical Hit!
+Attack: 3
+Defense: 0
+Bat is dead
+Base Attack: 0
+Critical Hit!
+Attack: 0
+Defense: 2
+Bat is dead
+Base Attack: 3
+Critical Hit!
+Attack: 3
+Defense: 6
+Bat is dead
+Base Attack: 3
+Critical Hit!
+Attack: 3
+Defense: 8
+Bat is dead
+Base Attack: 3
+Critical Hit!
+Attack: 3
+Defense: 0
+Zilx is dead
+Player health is 0
