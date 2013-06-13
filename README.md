@@ -7,6 +7,6 @@ Please note that this project may not ever be finished and could possibly be aba
 But in the mean time feel free to help anywhere possible! Happy Coding! :D
 
 ###Current Contibutors (i.e. My friends and I)
-===================
+=
 
 Texasjake95
