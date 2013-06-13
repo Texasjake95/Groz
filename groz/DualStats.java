@@ -1,5 +1,8 @@
 package groz;
 
+import groz.entity.Monster;
+import groz.entity.Player;
+
 /**
  * This class is used to allow {@link Monster}s to created dynamiclly by using a
  * second {@link Stats}, One is the Base Stats while the other is used when an
@@ -9,170 +12,128 @@ package groz;
  * @author Texasjake95
  */
 public class DualStats {
-	
+
 	private Stats LvlStats;
 	private Stats BaseStats;
-	
-	public DualStats(Stats stats)
-	{
+
+	public DualStats(Stats stats) {
 		this.BaseStats = stats;
 		this.resetStats();
 	}
-	
-	public void addAgility(int add)
-	{
+
+	public void addAgility(int add) {
 		this.LvlStats.addAgility(add);
 	}
-	
-	public void addAttack(int add)
-	{
+
+	public void addAttack(int add) {
 		this.LvlStats.addAttack(add);
 	}
-	
-	public void addDefense(int add)
-	{
+
+	public void addDefense(int add) {
 		this.LvlStats.addDefense(add);
 	}
-	
-	public void addHP(int add)
-	{
+
+	public void addHP(int add) {
 		this.LvlStats.addHP(add);
 	}
-	
-	public void addSpeed(int add)
-	{
+
+	public void addSpeed(int add) {
 		this.LvlStats.addSpeed(add);
 	}
-	
-	public int getAgility()
-	{
-		if (this.LvlStats.getAgility() + this.BaseStats.getAgility() < Ref.MAXLEVEL)
-		{
+
+	public int getAgility() {
+		if (this.LvlStats.getAgility() + this.BaseStats.getAgility() < Ref.MAXLEVEL) {
 			return this.LvlStats.getAgility() + this.BaseStats.getAgility();
-		}
-		else
-		{
+		} else {
 			return Ref.MAXLEVEL;
 		}
 	}
-	
-	public int getAttack()
-	{
-		if (this.LvlStats.getAttack() + this.BaseStats.getAttack() < Ref.MAXLEVEL)
-		{
+
+	public int getAttack() {
+		if (this.LvlStats.getAttack() + this.BaseStats.getAttack() < Ref.MAXLEVEL) {
 			return this.LvlStats.getAttack() + this.BaseStats.getAttack();
-		}
-		else
-		{
+		} else {
 			return Ref.MAXLEVEL;
 		}
 	}
-	
-	public int getBaseHealth()
-	{
+
+	public int getBaseHealth() {
 		return this.BaseStats.getBaseHealth();
 	}
-	
-	public Stats getBaseStats()
-	{
+
+	public Stats getBaseStats() {
 		return this.BaseStats;
 	}
-	
-	public int getDefense()
-	{
-		if (this.LvlStats.getDefense() + this.BaseStats.getDefense() < Ref.MAXLEVEL)
-		{
+
+	public int getDefense() {
+		if (this.LvlStats.getDefense() + this.BaseStats.getDefense() < Ref.MAXLEVEL) {
 			return this.LvlStats.getDefense() + this.BaseStats.getDefense();
-		}
-		else
-		{
+		} else {
 			return Ref.MAXLEVEL;
 		}
 	}
-	
-	public int getHealth()
-	{
+
+	public int getHealth() {
 		return this.LvlStats.getHealth();
 	}
-	
-	public int getHP()
-	{
-		if (this.LvlStats.getHP() + this.BaseStats.getHP() < Ref.MAXLEVEL)
-		{
+
+	public int getHP() {
+		if (this.LvlStats.getHP() + this.BaseStats.getHP() < Ref.MAXLEVEL) {
 			return this.LvlStats.getHP() + this.BaseStats.getHP();
-		}
-		else
-		{
+		} else {
 			return Ref.MAXLEVEL;
 		}
 	}
-	
-	public int getLvl()
-	{
+
+	public int getLvl() {
 		return this.LvlStats.getLvl() + 1;
 	}
-	
-	public Stats getLvlStats()
-	{
+
+	public Stats getLvlStats() {
 		return this.LvlStats;
 	}
-	
-	public int getMaxHealth()
-	{
+
+	public int getMaxHealth() {
 		return this.LvlStats.getMaxHealth() + this.BaseStats.getBaseHealth();
 	}
-	
-	public int getSpeed()
-	{
-		if (this.LvlStats.getSpeed() + this.BaseStats.getSpeed() < Ref.MAXLEVEL)
-		{
+
+	public int getSpeed() {
+		if (this.LvlStats.getSpeed() + this.BaseStats.getSpeed() < Ref.MAXLEVEL) {
 			return this.LvlStats.getSpeed() + this.BaseStats.getSpeed();
-		}
-		else
-		{
+		} else {
 			return Ref.MAXLEVEL;
 		}
 	}
-	
-	public void resetStats()
-	{
+
+	public void resetStats() {
 		this.LvlStats = new Stats(0, 0, 0, 0, 0, 0, 0);
 	}
-	
-	public void setHealth(int health)
-	{
+
+	public void setHealth(int health) {
 		this.LvlStats.setHealth(health);
 	}
-	
-	public void setHP(int hP)
-	{
+
+	public void setHP(int hP) {
 		this.LvlStats.setHP(hP);
 	}
-	
-	public void setLvl(int lvl)
-	{
+
+	public void setLvl(int lvl) {
 		this.LvlStats.setLvl(lvl - 1);
 	}
-	
-	public void setMaxHealth(int health)
-	{
+
+	public void setMaxHealth(int health) {
 		this.LvlStats.setMaxHealth(health);
 	}
-	
-	public void subtractHealth(int health)
-	{
+
+	public void subtractHealth(int health) {
 		this.LvlStats.subtractHealth(health);
 	}
-	
-	public void addHealth(int health)
-	{
-		if (this.LvlStats.getHealth() + health >= this.getMaxHealth())
-		{
+
+	public void addHealth(int health) {
+		if (this.LvlStats.getHealth() + health >= this.getMaxHealth()) {
 			this.LvlStats.setHealth(this.getMaxHealth());
 			return;
-		}
-		else
-		{
+		} else {
 			this.LvlStats.addHealth(health);
 			return;
 		}

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Texasjake95
  */
 public class Ref {
-	
+
 	public static final int MAXLEVEL = 100;
 	public static ArrayList<EnumStatType> BaseStats = new ArrayList<EnumStatType>();
 	public static ArrayList<EnumStatType> TankStats = new ArrayList<EnumStatType>();
@@ -24,9 +24,8 @@ public class Ref {
 	public static ArrayList<EnumStatType> AGLStats = new ArrayList<EnumStatType>();
 	public static ArrayList<EnumStatType> SPDStats = new ArrayList<EnumStatType>();
 	public static ArrayList<EnumStatType> BossStats = new ArrayList<EnumStatType>();
-	
-	public static void initStatTypes()
-	{
+
+	public static void initStatTypes() {
 		BaseStats.add(HP);
 		BaseStats.add(ATK);
 		BaseStats.add(DEF);
