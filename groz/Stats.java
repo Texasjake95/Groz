@@ -17,18 +17,15 @@ public class Stats {
 	private int DEF;
 	private int SPD;
 	private int AGL;
-	private int Lvl;
 	private int BaseHealth;
 
-	public Stats(int HP, int BaseHealth, int ATK, int DEF, int SPD, int AGL,
-			int LVL) {
+	public Stats(int HP, int BaseHealth, int ATK, int DEF, int SPD, int AGL) {
 		this.setHP(HP);
 		this.setBaseHealth(BaseHealth);
 		this.ATK = ATK;
 		this.DEF = DEF;
 		this.SPD = SPD;
 		this.AGL = AGL;
-		this.Lvl = LVL;
 	}
 
 	public void addAgility(int add) {
@@ -96,12 +93,8 @@ public class Stats {
 		return HP;
 	}
 
-	public int getLvl() {
-		return Lvl;
-	}
-
 	public int getMaxHealth() {
-		this.setMaxHealth(((this.getHP() * 5) + this.BaseHealth));
+		MaxHealth = (this.getHP() * 5 + this.BaseHealth);
 		return MaxHealth;
 	}
 
@@ -123,13 +116,6 @@ public class Stats {
 
 	public void setHP(int hP) {
 		HP = hP;
-	}
-
-	public void setLvl(int lvl) {
-		Lvl = lvl;
-		if (Lvl == 0) {
-			Lvl = 1;
-		}
 	}
 
 	public void setMaxHealth(int health) {

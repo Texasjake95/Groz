@@ -9,10 +9,9 @@ import java.util.ArrayList;
  */
 public class MonsterList {
 
-	private ArrayList<Monster> monsterList;
+	private final ArrayList<Monster> monsterList = new ArrayList<Monster>();
 
 	public MonsterList() {
-		this.monsterList = new ArrayList<Monster>();
 	}
 
 	public MonsterList addMonster(Monster monster, int times) {

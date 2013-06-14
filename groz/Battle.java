@@ -1,7 +1,9 @@
 package groz;
 
-import groz.entity.Entity;
+import groz.entity.DynMonster;
 import groz.entity.EnumMonsterType.EnumStatType;
+import groz.entity.InGameEntity;
+import groz.entity.InGamePlayer;
 import groz.entity.Monster;
 import groz.entity.Player;
 import groz.entity.attack.Attack;
@@ -19,11 +21,11 @@ public class Battle {
 	/**
 	 * The attacking {@link Monster}
 	 */
-	public Entity monster;
+	public DynMonster monster;
 	/**
 	 * The {@link Player} defending
 	 */
-	public Player player;
+	public InGamePlayer player;
 	private Random rand;
 	private Random crt;
 
@@ -34,22 +36,20 @@ public class Battle {
 	 * @param zone
 	 *            The Zone the {@link Battle} will be fought in
 	 */
-	public Battle(Player player, ZoneBase zone) {
+	public Battle(InGamePlayer player, ZoneBase zone) {
 		this.player = player;
 		crt = new Random();
 		rand = new Random();
 		System.out.println("Zone " + zone.xCord() + ", " + zone.yCord());
-		monster = Monster.getDynLvl(player, zone);
-		System.out.println(monster.getName());
-		System.out.println("LVL: " + monster.getStats().getLvl());
-		System.out.println("HP: " + monster.getStats().getHP());
-		int attackc = monster.getStats().getAttack()
-				- monster.getStats().getBaseStats().getAttack();
-		System.out.println("ATK: " + monster.getStats().getAttack() + " + "
-				+ attackc);
-		System.out.println("DEF: " + monster.getStats().getDefense());
-		System.out.println("SPD: " + monster.getStats().getSpeed());
-		System.out.println("AGL: " + monster.getStats().getAgility());
+		monster = DynMonster.getDynLvl(player, zone);
+		System.out.println(monster.getEntity().getName());
+		System.out.println("LVL: " + monster.getLevel());
+		System.out.println("HP: " + monster.getHP());
+		System.out.println("Health: " + monster.getHealth());
+		System.out.println("ATK: " + monster.getAttack());
+		System.out.println("DEF: " + monster.getDefense());
+		System.out.println("SPD: " + monster.getSpeed());
+		System.out.println("AGL: " + monster.getAgility());
 	}
 
 	/**
@@ -61,20 +61,22 @@ public class Battle {
 	 * @param victim
 	 *            The Victim
 	 */
-	public void Attack(Entity attacker, int attackIndex, Entity victim) {
+	public void Attack(InGameEntity attacker, int attackIndex,
+			InGameEntity victim) {
 		if (attacker.canAttack()) {
-			attacker.getAttack(attackIndex).doAttack(attacker, victim);
+			attacker.getEntity().getAttack(attackIndex)
+					.doAttack(attacker, victim);
 		} else {
 			System.out.println("");
-			System.out.println("Attacker: " + attacker.getName());
-			System.out
-					.println(attacker.getName() + ": " + attacker.getHealth());
-			System.out.println(victim.getName() + ": " + victim.getHealth());
+			System.out.println("Attacker: " + attacker.getEntity().getName());
+			System.out.println(attacker.getEntity().getName() + ": "
+					+ attacker.getHealth());
+			System.out.println(victim.getEntity().getName() + ": "
+					+ victim.getHealth());
 			System.out.println("Paralyzed!");
 		}
-		attacker.getStats().setHealth(
-				(int) attacker.preformEffect(EnumStatType.Health, attacker
-						.getStats().getHealth()));
+		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health,
+				attacker.getHealth()));
 	}
 
 	/**

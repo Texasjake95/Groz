@@ -1,7 +1,7 @@
 package groz.entity.attack;
 
-import groz.entity.Entity;
 import groz.entity.EnumMonsterType.EnumStatType;
+import groz.entity.InGameEntity;
 import groz.entity.Monster;
 import groz.entity.Player;
 import groz.entity.attack.effect.Effect;
@@ -69,24 +69,24 @@ public class Attack {
 		return this.effects != null;
 	}
 
-	public void doAttack(Entity attacker, Entity victim) {
+	public void doAttack(InGameEntity attacker, InGameEntity victim) {
 		System.out.println("");
-		System.out.println("Attacker: " + attacker.getName());
-		System.out.println(attacker.getName() + ": "
-				+ attacker.getStats().getHealth());
-		System.out.println(victim.getName() + ": "
-				+ victim.getStats().getHealth());
-		System.out.println(attacker.getName() + " MAX: "
-				+ attacker.getStats().getMaxHealth());
-		System.out.println(victim.getName() + " MAX: "
-				+ victim.getStats().getMaxHealth());
+		System.out.println("Attacker: " + attacker.getEntity().getName());
+		System.out.println(attacker.getEntity().getName() + ": "
+				+ attacker.getHealth());
+		System.out.println(victim.getEntity().getName() + ": "
+				+ victim.getHealth());
+		System.out.println(attacker.getEntity().getName() + " MAX: "
+				+ attacker.getMaxHealth());
+		System.out.println(victim.getEntity().getName() + " MAX: "
+				+ victim.getMaxHealth());
 		double aglilitya = attacker.preformEffect(EnumStatType.AGL, attacker
-				.getStats().getAgility()
-				- nextInt(attacker.getStats().getAgility() / 2));
+				.getAgility()
+				- nextInt(attacker.getAgility() / 2));
 		System.out.println(aglilitya);
 		double aglilityv = victim.preformEffect(EnumStatType.AGL, victim
-				.getStats().getAgility()
-				- nextInt(victim.getStats().getAgility() / 2));
+				.getAgility()
+				- nextInt(victim.getAgility() / 2));
 		System.out.println(aglilityv);
 		double hitChan = (aglilitya / aglilityv);
 		if (hitChan < 0) {
@@ -108,23 +108,23 @@ public class Attack {
 					this.addEffect(this, victim);
 				}
 				if (victim.isDead()) {
-					System.out.println(victim.getName() + " is dead");
+					System.out.println(victim.getEntity().getName() + " is dead");
 					victim = null;
 				}
 			} else {
 				if (!victim.isDead()) {
 
-					attacker.heal(attacker, this, rand);
+					attacker.heal(this, rand);
 					this.addEffect(this, attacker);
 				}
 				if (victim.isDead()) {
-					System.out.println(attacker.getName() + " is dead");
+					System.out.println(attacker.getEntity().getName() + " is dead");
 				}
 			}
 		}
 	}
 
-	private void addEffect(Attack attack, Entity victim) {
+	private void addEffect(Attack attack, InGameEntity victim) {
 		for (Effect effect : attack.effects) {
 			double chan = this.effectChan.get(effect);
 			if (rand.nextDouble() < chan) {
