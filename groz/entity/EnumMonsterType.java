@@ -10,21 +10,24 @@ import java.util.ArrayList;
  * 
  * @author Texasjake95
  */
-public enum EnumMonsterType {
-	Tank(Ref.TankStats), Speed(Ref.SPDStats), Attack(Ref.ATKStats), Agility(
-			Ref.AGLStats), Defense(Ref.DEFStats), Boss(Ref.BossStats);
-
+public enum EnumMonsterType
+{
+	Tank(Ref.TankStats), Speed(Ref.SPDStats), Attack(Ref.ATKStats), Agility(Ref.AGLStats), Defense(Ref.DEFStats), Boss(Ref.BossStats);
+	
 	private ArrayList<EnumStatType> stats;
-
-	EnumMonsterType(ArrayList<EnumStatType> stats) {
+	
+	EnumMonsterType(ArrayList<EnumStatType> stats)
+	{
 		this.stats = stats;
 	}
-
-	public ArrayList<EnumStatType> getStats() {
+	
+	public ArrayList<EnumStatType> getStats()
+	{
 		return this.stats;
 	}
-
-	public enum EnumStatType {
+	
+	public enum EnumStatType
+	{
 		HP(), ATK(), DEF(), AGL(), SPD(), Health();
 	}
 }

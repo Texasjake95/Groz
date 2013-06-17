@@ -1,6 +1,5 @@
 package groz.entity;
 
-import groz.DualStats;
 import groz.Stats;
 import groz.entity.attack.Attack;
 
@@ -10,18 +9,27 @@ import groz.entity.attack.Attack;
  * @author Texasjake95
  */
 public class Player extends Entity {
-
-	public Player(String playername, int lvl) {
-		super(playername, new DualStats(new Stats(0, 10, 2, 2, 2, 2, lvl)));
-		this.getStats().setHealth(10);
+	
+	private int lvl;
+	
+	public Player(String playername, int lvl)
+	{
+		super(playername, new Stats(0, 10, 2, 2, 2, 2));
 	}
-
-	public void setLevel(int lvl) {
-		this.getStats().setLvl(lvl);
+	
+	public void setLevel(int lvl)
+	{
+		this.lvl = lvl;
 	}
-
+	
+	public int getLevel()
+	{
+		return this.lvl;
+	}
+	
 	@Override
-	public Player addAttack(Attack attack) {
+	public Player addAttack(Attack attack)
+	{
 		// TODO Auto-generated method stub
 		return (Player) super.addAttack(attack);
 	}

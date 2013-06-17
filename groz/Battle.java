@@ -1,7 +1,9 @@
 package groz;
 
-import groz.entity.Entity;
+import groz.entity.DynMonster;
 import groz.entity.EnumMonsterType.EnumStatType;
+import groz.entity.InGameEntity;
+import groz.entity.InGamePlayer;
 import groz.entity.Monster;
 import groz.entity.Player;
 import groz.entity.attack.Attack;
@@ -15,18 +17,18 @@ import java.util.Random;
  * @author Texasjake95
  */
 public class Battle {
-
+	
 	/**
 	 * The attacking {@link Monster}
 	 */
-	public Entity monster;
+	public DynMonster monster;
 	/**
 	 * The {@link Player} defending
 	 */
-	public Player player;
+	public InGamePlayer player;
 	private Random rand;
 	private Random crt;
-
+	
 	/**
 	 * 
 	 * @param player
@@ -34,24 +36,22 @@ public class Battle {
 	 * @param zone
 	 *            The Zone the {@link Battle} will be fought in
 	 */
-	public Battle(Player player, ZoneBase zone) {
-		this.player = player;
+	public Battle(InGamePlayer player, ZoneBase zone)
+	{
 		crt = new Random();
 		rand = new Random();
 		System.out.println("Zone " + zone.xCord() + ", " + zone.yCord());
-		monster = Monster.getDynLvl(player, zone);
-		System.out.println(monster.getName());
-		System.out.println("LVL: " + monster.getStats().getLvl());
-		System.out.println("HP: " + monster.getStats().getHP());
-		int attackc = monster.getStats().getAttack()
-				- monster.getStats().getBaseStats().getAttack();
-		System.out.println("ATK: " + monster.getStats().getAttack() + " + "
-				+ attackc);
-		System.out.println("DEF: " + monster.getStats().getDefense());
-		System.out.println("SPD: " + monster.getStats().getSpeed());
-		System.out.println("AGL: " + monster.getStats().getAgility());
+		monster = DynMonster.getDynLvl(player, zone);
+		System.out.println(monster.getEntity().getName());
+		System.out.println("LVL: " + monster.getLevel());
+		System.out.println("HP: " + monster.getHP());
+		System.out.println("Health: " + monster.getHealth());
+		System.out.println("ATK: " + monster.getAttack());
+		System.out.println("DEF: " + monster.getDefense());
+		System.out.println("SPD: " + monster.getSpeed());
+		System.out.println("AGL: " + monster.getAgility());
 	}
-
+	
 	/**
 	 * Does attack to victim using the Attacker's {@link Attack} list
 	 * 
@@ -61,37 +61,42 @@ public class Battle {
 	 * @param victim
 	 *            The Victim
 	 */
-	public void Attack(Entity attacker, int attackIndex, Entity victim) {
-		if (attacker.canAttack()) {
-			attacker.getAttack(attackIndex).doAttack(attacker, victim);
-		} else {
+	public void Attack(InGameEntity attacker, int attackIndex, InGameEntity victim)
+	{
+		if (attacker.canAttack())
+		{
+			attacker.getEntity().getAttack(attackIndex).doAttack(attacker, victim);
+		}
+		else
+		{
 			System.out.println("");
-			System.out.println("Attacker: " + attacker.getName());
-			System.out
-					.println(attacker.getName() + ": " + attacker.getHealth());
-			System.out.println(victim.getName() + ": " + victim.getHealth());
+			System.out.println("Attacker: " + attacker.getEntity().getName());
+			System.out.println(attacker.getEntity().getName() + ": " + attacker.getHealth());
+			System.out.println(victim.getEntity().getName() + ": " + victim.getHealth());
 			System.out.println("Paralyzed!");
 		}
-		attacker.getStats().setHealth(
-				(int) attacker.preformEffect(EnumStatType.Health, attacker
-						.getStats().getHealth()));
+		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health, attacker.getHealth()));
 	}
-
+	
 	/**
 	 * 
 	 * @return Can this {@link Battle} continue
 	 */
-	public boolean canContinue() {
+	public boolean canContinue()
+	{
 		return !monster.isDead() && !player.isDead();
 	}
-
-	public boolean isCrt() {
+	
+	public boolean isCrt()
+	{
 		return crt.nextDouble() < .1d;
 	}
-
-	public int nextInt(double d) {
+	
+	public int nextInt(double d)
+	{
 		int b = (int) d;
-		if (b < 0) {
+		if (b < 0)
+		{
 			b *= -1;
 		}
 		return rand.nextInt(b);
