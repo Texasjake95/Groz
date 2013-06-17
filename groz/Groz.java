@@ -4,7 +4,7 @@ import groz.entity.EnumMonsterType.EnumStatType;
 import groz.entity.InGamePlayer;
 import groz.entity.Player;
 import groz.entity.attack.Attack;
-import groz.util.GrozLogger;
+import groz.util.logging.GrozLogger;
 import groz.zone.ZoneBase;
 
 import java.io.IOException;
@@ -46,6 +46,7 @@ public class Groz {
 		{
 			if (!gamePlayer.isDead())
 			{
+				
 				zone = ZoneBase.randomZone.get(rand.nextInt(ZoneBase.randomZone.size()));
 				Battle battle = new Battle(gamePlayer, zone);
 				while (battle.canContinue())
@@ -73,12 +74,12 @@ public class Groz {
 						}
 					}
 				}
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				System.out.println();
+				GrozLogger.logGame("");
+				GrozLogger.logGame("");
+				GrozLogger.logGame("");
+				GrozLogger.logGame("");
 			}
 		}
-		System.out.println("Player health is " + gamePlayer.getHealth());
+		GrozLogger.logGame("Player health is " + gamePlayer.getHealth());
 	}
 }

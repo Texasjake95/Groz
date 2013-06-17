@@ -3,6 +3,7 @@ package groz.entity.attack.effect;
 import groz.entity.EnumMonsterType.EnumStatType;
 import groz.entity.attack.effect.StatChanger.EnumModifier;
 import groz.entity.attack.effect.StatChanger.StatModifier;
+import groz.util.logging.GrozLogger;
 
 /**
  * @author Texasjake95
@@ -72,8 +73,8 @@ public class Effect implements Comparable<Effect> {
 	
 	public boolean canAttack(double d)
 	{
-		System.out.println("Effect Chance: " + d);
-		System.out.println("Attack Chance: " + this.attackChance);
+		GrozLogger.logGame("Effect Chance: " + d);
+		GrozLogger.logGame("Attack Chance: " + this.attackChance);
 		return d < this.attackChance;
 	}
 	

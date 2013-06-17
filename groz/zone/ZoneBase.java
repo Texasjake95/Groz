@@ -2,6 +2,7 @@ package groz.zone;
 
 import groz.entity.Monster;
 import groz.util.IntPair;
+import groz.util.logging.GrozLogger;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class ZoneBase {
 	{
 		if (zoneList[pair.getIntX()][pair.getIntY()] != null)
 		{
-			System.out.println("There is already a Zone located at" + pair.getIntX() + ", " + pair.getIntY());
+			GrozLogger.logGame("There is already a Zone located at" + pair.getIntX() + ", " + pair.getIntY());
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		this.cords = pair;

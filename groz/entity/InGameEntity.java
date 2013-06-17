@@ -3,6 +3,7 @@ package groz.entity;
 import groz.entity.EnumMonsterType.EnumStatType;
 import groz.entity.attack.Attack;
 import groz.entity.attack.effect.Effect;
+import groz.util.logging.GrozLogger;
 
 import java.util.Map;
 import java.util.Random;
@@ -95,10 +96,10 @@ public class InGameEntity {
 		int EAttack = (int) attacker.preformEffect(EnumStatType.ATK, attacker.getAttack() - rand.nextInt(attacker.getAttack() / 2));
 		int Defense = (int) this.preformEffect(EnumStatType.DEF, this.DEF - rand.nextInt(this.DEF / 2));
 		EAttack *= attack.getDamagePer();
-		System.out.println("Base Attack: " + EAttack);
+		GrozLogger.logGame("Base Attack: " + EAttack);
 		if (isCrt)
 		{
-			System.out.println("Critical Hit!");
+			GrozLogger.logGame("Critical Hit!");
 			EAttack *= 1.50;
 		}
 		int damage = EAttack - Defense;
@@ -106,9 +107,9 @@ public class InGameEntity {
 		{
 			damage = 1;
 		}
-		System.out.println("Attack: " + EAttack);
-		System.out.println("Defense: " + Defense);
-		System.out.println("Damage: " + damage);
+		GrozLogger.logGame("Attack: " + EAttack);
+		GrozLogger.logGame("Defense: " + Defense);
+		GrozLogger.logGame("Damage: " + damage);
 		this.subtractHealth(damage);
 	}
 	
@@ -139,7 +140,7 @@ public class InGameEntity {
 	public void addEffect(Effect effect, int i)
 	{
 		this.effects.put(effect, i);
-		System.out.println("Is Paralyzed!");
+		GrozLogger.logGame("Is Paralyzed!");
 	}
 	
 	public boolean hadAnyEffects()

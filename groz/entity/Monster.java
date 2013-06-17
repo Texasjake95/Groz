@@ -7,6 +7,7 @@ import static groz.entity.EnumMonsterType.Speed;
 import static groz.entity.EnumMonsterType.Tank;
 import groz.Stats;
 import groz.entity.attack.Attack;
+import groz.util.logging.GrozLogger;
 
 /**
  * This class is the base for all monsters
@@ -31,7 +32,7 @@ public class Monster extends Entity {
 		super(name, stats);
 		if (monsterList[id] != null)
 		{
-			System.out.println("While attempting to add " + this.getName() + ", the slot is occupied by " + monsterList[id].getName());
+			GrozLogger.logGame("While attempting to add " + this.getName() + ", the slot is occupied by " + monsterList[id].getName());
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		else
