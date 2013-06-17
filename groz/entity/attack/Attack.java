@@ -5,6 +5,7 @@ import groz.entity.InGameEntity;
 import groz.entity.Monster;
 import groz.entity.Player;
 import groz.entity.attack.effect.Effect;
+import groz.util.logging.GrozLogger;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -82,16 +83,16 @@ public class Attack {
 	
 	public void doAttack(InGameEntity attacker, InGameEntity victim)
 	{
-		System.out.println("");
-		System.out.println("Attacker: " + attacker.getEntity().getName());
-		System.out.println(attacker.getEntity().getName() + ": " + attacker.getHealth());
-		System.out.println(victim.getEntity().getName() + ": " + victim.getHealth());
-		System.out.println(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth());
-		System.out.println(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth());
+		GrozLogger.logGame("");
+		GrozLogger.logGame("Attacker: " + attacker.getEntity().getName());
+		GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth());
+		GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth());
+		GrozLogger.logGame(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth());
+		GrozLogger.logGame(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth());
 		double aglilitya = attacker.preformEffect(EnumStatType.AGL, attacker.getAgility() - nextInt(attacker.getAgility() / 2));
-		System.out.println(aglilitya);
+		GrozLogger.logGame(aglilitya);
 		double aglilityv = victim.preformEffect(EnumStatType.AGL, victim.getAgility() - nextInt(victim.getAgility() / 2));
-		System.out.println(aglilityv);
+		GrozLogger.logGame(aglilityv);
 		double hitChan = (aglilitya / aglilityv);
 		if (hitChan < 0)
 		{
@@ -102,12 +103,12 @@ public class Attack {
 			hitChan -= 1d;
 		}
 		hitChan *= this.accuracy;
-		System.out.println("Hit Chance: " + hitChan);
+		GrozLogger.logGame("Hit Chance: " + hitChan);
 		double hitChan2 = rand.nextDouble();
-		System.out.println("Hit Chance 2: " + hitChan2);
+		GrozLogger.logGame("Hit Chance 2: " + hitChan2);
 		if (hitChan2 >= hitChan)
 		{
-			System.out.println("Attack Missed!");
+			GrozLogger.logGame("Attack Missed!");
 		}
 		else
 		{
@@ -120,7 +121,7 @@ public class Attack {
 				}
 				if (victim.isDead())
 				{
-					System.out.println(victim.getEntity().getName() + " is dead");
+					GrozLogger.logGame(victim.getEntity().getName() + " is dead");
 					victim = null;
 				}
 			}
@@ -133,7 +134,7 @@ public class Attack {
 				}
 				if (victim.isDead())
 				{
-					System.out.println(attacker.getEntity().getName() + " is dead");
+					GrozLogger.logGame(attacker.getEntity().getName() + " is dead");
 				}
 			}
 		}

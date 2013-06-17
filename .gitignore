@@ -220,5 +220,5 @@ pip-log.txt
 #############
 *.lck
 *.log
-*.jar
+#*.jar
 *.class

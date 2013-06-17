@@ -7,9 +7,11 @@ import groz.entity.InGamePlayer;
 import groz.entity.Monster;
 import groz.entity.Player;
 import groz.entity.attack.Attack;
+import groz.util.logging.GrozLogger;
 import groz.zone.ZoneBase;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 /**
  * This is the class that Groz uses to commence a battle
@@ -38,18 +40,20 @@ public class Battle {
 	 */
 	public Battle(InGamePlayer player, ZoneBase zone)
 	{
+		this.player = player;
 		crt = new Random();
 		rand = new Random();
-		System.out.println("Zone " + zone.xCord() + ", " + zone.yCord());
+		GrozLogger.logGame("Zone " + zone.xCord() + ", " + zone.yCord());
 		monster = DynMonster.getDynLvl(player, zone);
-		System.out.println(monster.getEntity().getName());
-		System.out.println("LVL: " + monster.getLevel());
-		System.out.println("HP: " + monster.getHP());
-		System.out.println("Health: " + monster.getHealth());
-		System.out.println("ATK: " + monster.getAttack());
-		System.out.println("DEF: " + monster.getDefense());
-		System.out.println("SPD: " + monster.getSpeed());
-		System.out.println("AGL: " + monster.getAgility());
+		GrozLogger.logGame(monster.getEntity().getName());
+		GrozLogger.logGame("LVL: " + monster.getLevel());
+		GrozLogger.logGame("HP: " + monster.getHP());
+		GrozLogger.logGame("Health: " + monster.getHealth());
+		GrozLogger.logGame("ATK: " + monster.getAttack());
+		GrozLogger.logGame("DEF: " + monster.getDefense());
+		GrozLogger.logGame("SPD: " + monster.getSpeed());
+		GrozLogger.logGame("AGL: " + monster.getAgility());
+		GrozLogger.logGame(Level.INFO, "Is Player null:" + (this.player == null));
 	}
 	
 	/**
@@ -69,11 +73,11 @@ public class Battle {
 		}
 		else
 		{
-			System.out.println("");
-			System.out.println("Attacker: " + attacker.getEntity().getName());
-			System.out.println(attacker.getEntity().getName() + ": " + attacker.getHealth());
-			System.out.println(victim.getEntity().getName() + ": " + victim.getHealth());
-			System.out.println("Paralyzed!");
+			GrozLogger.logGame("");
+			GrozLogger.logGame("Attacker: " + attacker.getEntity().getName());
+			GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth());
+			GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth());
+			GrozLogger.logGame("Paralyzed!");
 		}
 		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health, attacker.getHealth()));
 	}
@@ -84,7 +88,8 @@ public class Battle {
 	 */
 	public boolean canContinue()
 	{
-		return !monster.isDead() && !player.isDead();
+		
+		return monster== null || player == null ? false : !monster.isDead() && !player.isDead();
 	}
 	
 	public boolean isCrt()
