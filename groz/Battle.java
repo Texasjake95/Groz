@@ -17,7 +17,7 @@ import java.util.Random;
  * @author Texasjake95
  */
 public class Battle {
-
+	
 	/**
 	 * The attacking {@link Monster}
 	 */
@@ -28,7 +28,7 @@ public class Battle {
 	public InGamePlayer player;
 	private Random rand;
 	private Random crt;
-
+	
 	/**
 	 * 
 	 * @param player
@@ -36,8 +36,8 @@ public class Battle {
 	 * @param zone
 	 *            The Zone the {@link Battle} will be fought in
 	 */
-	public Battle(InGamePlayer player, ZoneBase zone) {
-		this.player = player;
+	public Battle(InGamePlayer player, ZoneBase zone)
+	{
 		crt = new Random();
 		rand = new Random();
 		System.out.println("Zone " + zone.xCord() + ", " + zone.yCord());
@@ -51,7 +51,7 @@ public class Battle {
 		System.out.println("SPD: " + monster.getSpeed());
 		System.out.println("AGL: " + monster.getAgility());
 	}
-
+	
 	/**
 	 * Does attack to victim using the Attacker's {@link Attack} list
 	 * 
@@ -61,39 +61,42 @@ public class Battle {
 	 * @param victim
 	 *            The Victim
 	 */
-	public void Attack(InGameEntity attacker, int attackIndex,
-			InGameEntity victim) {
-		if (attacker.canAttack()) {
-			attacker.getEntity().getAttack(attackIndex)
-					.doAttack(attacker, victim);
-		} else {
+	public void Attack(InGameEntity attacker, int attackIndex, InGameEntity victim)
+	{
+		if (attacker.canAttack())
+		{
+			attacker.getEntity().getAttack(attackIndex).doAttack(attacker, victim);
+		}
+		else
+		{
 			System.out.println("");
 			System.out.println("Attacker: " + attacker.getEntity().getName());
-			System.out.println(attacker.getEntity().getName() + ": "
-					+ attacker.getHealth());
-			System.out.println(victim.getEntity().getName() + ": "
-					+ victim.getHealth());
+			System.out.println(attacker.getEntity().getName() + ": " + attacker.getHealth());
+			System.out.println(victim.getEntity().getName() + ": " + victim.getHealth());
 			System.out.println("Paralyzed!");
 		}
-		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health,
-				attacker.getHealth()));
+		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health, attacker.getHealth()));
 	}
-
+	
 	/**
 	 * 
 	 * @return Can this {@link Battle} continue
 	 */
-	public boolean canContinue() {
+	public boolean canContinue()
+	{
 		return !monster.isDead() && !player.isDead();
 	}
-
-	public boolean isCrt() {
+	
+	public boolean isCrt()
+	{
 		return crt.nextDouble() < .1d;
 	}
-
-	public int nextInt(double d) {
+	
+	public int nextInt(double d)
+	{
 		int b = (int) d;
-		if (b < 0) {
+		if (b < 0)
+		{
 			b *= -1;
 		}
 		return rand.nextInt(b);

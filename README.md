@@ -7,6 +7,13 @@ Please note that this project may not ever be finished and could possibly be aba
 
 But in the mean time feel free to help anywhere possible! Happy Coding! :D
 
+######Branches
+----
+dev-XXX is the branch that XXX pushes commits (i.e. I, Texasjake95, push my commits to dev-Texasjake95)
+
+These branches will be merged to the master branch when a major rewrite or several minor fixes are done
+
+
 ####Current Contibutors (i.e. My friends and I)
 ***
 

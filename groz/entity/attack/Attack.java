@@ -18,7 +18,7 @@ import java.util.TreeMap;
  * @author Texasjake95
  */
 public class Attack {
-
+	
 	private Random rand = new Random();
 	private Random crt = new Random();
 	private double damagePer;
@@ -27,122 +27,144 @@ public class Attack {
 	private double crtHitRatio = .1d;
 	private final ArrayList<Effect> effects = new ArrayList<Effect>();
 	private Map<Effect, Double> effectChan = new TreeMap<Effect, Double>();
-
+	
 	// public static Attack[] batAttacks = new Attack[]{new Attack(.75, .9), new
 	// Attack(.5, .9).setEffects(effects, ds)};
-	public Attack(double damage, double accuracy) {
+	public Attack(double damage, double accuracy)
+	{
 		this.damagePer = damage;
 		this.accuracy = accuracy;
 	}
-
-	public boolean givesDamage() {
+	
+	public boolean givesDamage()
+	{
 		return this.givesDam;
 	}
-
-	public Attack setGivesDamage(boolean givesDam) {
+	
+	public Attack setGivesDamage(boolean givesDam)
+	{
 		this.givesDam = givesDam;
 		return this;
 	}
-
-	public double getDamagePer() {
+	
+	public double getDamagePer()
+	{
 		return this.damagePer;
 	}
-
-	public Attack setEffects(ArrayList<Effect> effects, double[] ds) {
-		if (ds.length == effects.size()) {
+	
+	public Attack setEffects(ArrayList<Effect> effects, double[] ds)
+	{
+		if (ds.length == effects.size())
+		{
 			this.effects.addAll(effects);
-			for (int i = 0; i < effects.size(); i++) {
+			for (int i = 0; i < effects.size(); i++)
+			{
 				this.effectChan.put(effects.get(i), ds[i]);
 			}
-		} else {
+		}
+		else
+		{
 		}
 		return this;
 	}
-
-	public Attack addEffects(Effect effect, double ds) {
+	
+	public Attack addEffects(Effect effect, double ds)
+	{
 		this.effects.add(effect);
 		this.effectChan.put(effect, ds);
 		return this;
 	}
-
-	public boolean hasEffects() {
+	
+	public boolean hasEffects()
+	{
 		return this.effects != null;
 	}
-
-	public void doAttack(InGameEntity attacker, InGameEntity victim) {
+	
+	public void doAttack(InGameEntity attacker, InGameEntity victim)
+	{
 		System.out.println("");
 		System.out.println("Attacker: " + attacker.getEntity().getName());
-		System.out.println(attacker.getEntity().getName() + ": "
-				+ attacker.getHealth());
-		System.out.println(victim.getEntity().getName() + ": "
-				+ victim.getHealth());
-		System.out.println(attacker.getEntity().getName() + " MAX: "
-				+ attacker.getMaxHealth());
-		System.out.println(victim.getEntity().getName() + " MAX: "
-				+ victim.getMaxHealth());
-		double aglilitya = attacker.preformEffect(EnumStatType.AGL, attacker
-				.getAgility()
-				- nextInt(attacker.getAgility() / 2));
+		System.out.println(attacker.getEntity().getName() + ": " + attacker.getHealth());
+		System.out.println(victim.getEntity().getName() + ": " + victim.getHealth());
+		System.out.println(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth());
+		System.out.println(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth());
+		double aglilitya = attacker.preformEffect(EnumStatType.AGL, attacker.getAgility() - nextInt(attacker.getAgility() / 2));
 		System.out.println(aglilitya);
-		double aglilityv = victim.preformEffect(EnumStatType.AGL, victim
-				.getAgility()
-				- nextInt(victim.getAgility() / 2));
+		double aglilityv = victim.preformEffect(EnumStatType.AGL, victim.getAgility() - nextInt(victim.getAgility() / 2));
 		System.out.println(aglilityv);
 		double hitChan = (aglilitya / aglilityv);
-		if (hitChan < 0) {
+		if (hitChan < 0)
+		{
 			hitChan *= -1;
 		}
-		while (hitChan > 1) {
+		while (hitChan > 1)
+		{
 			hitChan -= 1d;
 		}
 		hitChan *= this.accuracy;
 		System.out.println("Hit Chance: " + hitChan);
 		double hitChan2 = rand.nextDouble();
 		System.out.println("Hit Chance 2: " + hitChan2);
-		if (hitChan2 >= hitChan) {
+		if (hitChan2 >= hitChan)
+		{
 			System.out.println("Attack Missed!");
-		} else {
-			if (this.givesDamage()) {
-				if (!victim.isDead()) {
+		}
+		else
+		{
+			if (this.givesDamage())
+			{
+				if (!victim.isDead())
+				{
 					victim.damage(attacker, this, rand, isCrt());
 					this.addEffect(this, victim);
 				}
-				if (victim.isDead()) {
+				if (victim.isDead())
+				{
 					System.out.println(victim.getEntity().getName() + " is dead");
 					victim = null;
 				}
-			} else {
-				if (!victim.isDead()) {
-
+			}
+			else
+			{
+				if (!victim.isDead())
+				{
 					attacker.heal(this, rand);
 					this.addEffect(this, attacker);
 				}
-				if (victim.isDead()) {
+				if (victim.isDead())
+				{
 					System.out.println(attacker.getEntity().getName() + " is dead");
 				}
 			}
 		}
 	}
-
-	private void addEffect(Attack attack, InGameEntity victim) {
-		for (Effect effect : attack.effects) {
+	
+	private void addEffect(Attack attack, InGameEntity victim)
+	{
+		for (Effect effect : attack.effects)
+		{
 			double chan = this.effectChan.get(effect);
-			if (rand.nextDouble() < chan) {
+			if (rand.nextDouble() < chan)
+			{
 				victim.addEffect(effect, 5);
 			}
 		}
 	}
-
-	public boolean isCrt() {
+	
+	public boolean isCrt()
+	{
 		return crt.nextDouble() < this.crtHitRatio;
 	}
-
-	public int nextInt(double d) {
+	
+	public int nextInt(double d)
+	{
 		int b = (int) d;
-		if (b <= 0) {
+		if (b <= 0)
+		{
 			b = 1;
 		}
-		if (b < 0) {
+		if (b < 0)
+		{
 			b *= -1;
 		}
 		return rand.nextInt(b);

@@ -9,25 +9,28 @@ import groz.entity.attack.Attack;
  * @author Texasjake95
  */
 public class Player extends Entity {
-
+	
 	private int lvl;
-
-	public Player(String playername, int lvl) {
+	
+	public Player(String playername, int lvl)
+	{
 		super(playername, new Stats(0, 10, 2, 2, 2, 2));
 	}
-
-	public void setLevel(int lvl) {
+	
+	public void setLevel(int lvl)
+	{
 		this.lvl = lvl;
 	}
-
-	public int getLevel() {
+	
+	public int getLevel()
+	{
 		return this.lvl;
 	}
-
+	
 	@Override
-	public Player addAttack(Attack attack) {
+	public Player addAttack(Attack attack)
+	{
 		// TODO Auto-generated method stub
 		return (Player) super.addAttack(attack);
 	}
-
 }
