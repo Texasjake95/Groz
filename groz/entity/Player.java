@@ -30,6 +30,6 @@ public class Player extends Entity {
 	@Override
 	public Player addAttack(Attack attack, int index)
 	{
-		return (Player) super.addAttack(attack,index);
+		return (Player) super.addAttack(attack, index);
 	}
 }

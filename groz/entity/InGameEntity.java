@@ -109,10 +109,10 @@ public class InGameEntity {
 		{
 			damage = 1;
 		}
-		if(Groz.DEBUG)
+		if (Groz.DEBUG)
 		{
-		GrozLogger.logGame("Attack: " + EAttack);
-		GrozLogger.logGame("Defense: " + Defense);
+			GrozLogger.logGame("Attack: " + EAttack);
+			GrozLogger.logGame("Defense: " + Defense);
 		}
 		GrozLogger.logGame("Damage: " + damage);
 		this.subtractHealth(damage);

@@ -60,7 +60,6 @@ public class Battle {
 			GrozLogger.logGame("AGL: " + monster.getAgility());
 			GrozLogger.logGame(Level.INFO, "Is Player null:" + (this.player == null));
 		}
-		
 		GrozLogger.logGame("");
 	}
 	

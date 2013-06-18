@@ -35,7 +35,7 @@ public class Groz {
 		player = new Player("Zilx", 1);
 		player.setLevel(1);
 		player.getStats().addHP(5);
-		player.addAttack( new Attack(1d, .75d, "Normal"), 0);
+		player.addAttack(new Attack(1d, .75d, "Normal"), 0);
 		player.addAttack(new Attack(1d, .75d, "Strong"), 1);
 		player.addAttack(new Attack(.5d, 1d, "Light"), 2);
 		player.addAttack(new Attack(1d, .75d, "Heal"), 3);
