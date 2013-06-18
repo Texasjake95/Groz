@@ -33,6 +33,13 @@ public class GrozLogger {
 			masterInit = true;
 		}
 	}
+	
+	public static void logInput(String msg)
+	{
+		init();
+		getLogger().log(Level.INFO, msg);
+	}
+	
 	public static void logGame(Level level, String msg)
 	{
 		init();
@@ -46,10 +53,10 @@ public class GrozLogger {
 		getGameLogger().log(GAME, msg);
 		getLogger().log(GAME, msg);
 	}
+	
 	public static void logGame(double doub)
 	{
 		logGame(doub + "");
-		
 	}
 	
 	public static Logger getLogger()
@@ -135,5 +142,4 @@ public class GrozLogger {
 		fileHandler.setFormatter(new GrozLoggerFormatter());
 		logger.addHandler(fileHandler);
 	}
-	
 }

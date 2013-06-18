@@ -1,5 +1,6 @@
 package groz.entity;
 
+import groz.Groz;
 import groz.entity.EnumMonsterType.EnumStatType;
 import groz.entity.attack.Attack;
 import groz.entity.attack.effect.Effect;
@@ -96,7 +97,8 @@ public class InGameEntity {
 		int EAttack = (int) attacker.preformEffect(EnumStatType.ATK, attacker.getAttack() - rand.nextInt(attacker.getAttack() / 2));
 		int Defense = (int) this.preformEffect(EnumStatType.DEF, this.DEF - rand.nextInt(this.DEF / 2));
 		EAttack *= attack.getDamagePer();
-		GrozLogger.logGame("Base Attack: " + EAttack);
+		if (Groz.DEBUG)
+			GrozLogger.logGame("Base Attack: " + EAttack);
 		if (isCrt)
 		{
 			GrozLogger.logGame("Critical Hit!");
@@ -107,8 +109,11 @@ public class InGameEntity {
 		{
 			damage = 1;
 		}
+		if(Groz.DEBUG)
+		{
 		GrozLogger.logGame("Attack: " + EAttack);
 		GrozLogger.logGame("Defense: " + Defense);
+		}
 		GrozLogger.logGame("Damage: " + damage);
 		this.subtractHealth(damage);
 	}
@@ -126,6 +131,7 @@ public class InGameEntity {
 		{
 			heal = 1;
 		}
+		GrozLogger.logGame("Heal:" + heal);
 		if (this.Health + heal < this.MaxHealth)
 			this.Health += heal;
 		else
