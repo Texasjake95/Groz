@@ -45,15 +45,22 @@ public class Battle {
 		rand = new Random();
 		GrozLogger.logGame("Zone " + zone.xCord() + ", " + zone.yCord());
 		monster = DynMonster.getDynLvl(player, zone);
-		GrozLogger.logGame(monster.getEntity().getName());
-		GrozLogger.logGame("LVL: " + monster.getLevel());
-		GrozLogger.logGame("HP: " + monster.getHP());
+		GrozLogger.logGame(monster.getEntity().getName() + " has appeared!");
+		if (Groz.DEBUG)
+		{
+			GrozLogger.logGame("LVL: " + monster.getLevel());
+			GrozLogger.logGame("HP: " + monster.getHP());
+		}
 		GrozLogger.logGame("Health: " + monster.getHealth());
-		GrozLogger.logGame("ATK: " + monster.getAttack());
-		GrozLogger.logGame("DEF: " + monster.getDefense());
-		GrozLogger.logGame("SPD: " + monster.getSpeed());
-		GrozLogger.logGame("AGL: " + monster.getAgility());
-		GrozLogger.logGame(Level.INFO, "Is Player null:" + (this.player == null));
+		if (Groz.DEBUG)
+		{
+			GrozLogger.logGame("ATK: " + monster.getAttack());
+			GrozLogger.logGame("DEF: " + monster.getDefense());
+			GrozLogger.logGame("SPD: " + monster.getSpeed());
+			GrozLogger.logGame("AGL: " + monster.getAgility());
+			GrozLogger.logGame(Level.INFO, "Is Player null:" + (this.player == null));
+		}
+		GrozLogger.logGame("");
 	}
 	
 	/**
@@ -77,7 +84,7 @@ public class Battle {
 			GrozLogger.logGame("Attacker: " + attacker.getEntity().getName());
 			GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth());
 			GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth());
-			GrozLogger.logGame("Paralyzed!");
+			GrozLogger.logGame(attacker.getEntity().getName() + " is paralyzed!");
 		}
 		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health, attacker.getHealth()));
 	}
@@ -88,8 +95,7 @@ public class Battle {
 	 */
 	public boolean canContinue()
 	{
-		
-		return monster== null || player == null ? false : !monster.isDead() && !player.isDead();
+		return monster == null || player == null ? false : !monster.isDead() && !player.isDead();
 	}
 	
 	public boolean isCrt()

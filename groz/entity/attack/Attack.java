@@ -1,5 +1,6 @@
 package groz.entity.attack;
 
+import groz.Groz;
 import groz.entity.EnumMonsterType.EnumStatType;
 import groz.entity.InGameEntity;
 import groz.entity.Monster;
@@ -20,10 +21,11 @@ import java.util.TreeMap;
  */
 public class Attack {
 	
+	public String Name;
 	private Random rand = new Random();
 	private Random crt = new Random();
-	private double damagePer;
-	private double accuracy;
+	private final double damagePer;
+	private final double accuracy;
 	private boolean givesDam = true;
 	private double crtHitRatio = .1d;
 	private final ArrayList<Effect> effects = new ArrayList<Effect>();
@@ -33,8 +35,14 @@ public class Attack {
 	// Attack(.5, .9).setEffects(effects, ds)};
 	public Attack(double damage, double accuracy)
 	{
+		this(damage, accuracy, "");
+	}
+	
+	public Attack(double damage, double accuracy, String name)
+	{
 		this.damagePer = damage;
 		this.accuracy = accuracy;
+		this.Name = name;
 	}
 	
 	public boolean givesDamage()
@@ -83,16 +91,20 @@ public class Attack {
 	
 	public void doAttack(InGameEntity attacker, InGameEntity victim)
 	{
-		GrozLogger.logGame("");
 		GrozLogger.logGame("Attacker: " + attacker.getEntity().getName());
-		GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth());
-		GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth());
-		GrozLogger.logGame(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth());
-		GrozLogger.logGame(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth());
+		GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth() + " HP");
+		GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth() + " HP");
+		if (Groz.DEBUG)
+		{
+			GrozLogger.logGame(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth());
+			GrozLogger.logGame(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth());
+		}
 		double aglilitya = attacker.preformEffect(EnumStatType.AGL, attacker.getAgility() - nextInt(attacker.getAgility() / 2));
-		GrozLogger.logGame(aglilitya);
+		if (Groz.DEBUG)
+			GrozLogger.logGame(aglilitya);
 		double aglilityv = victim.preformEffect(EnumStatType.AGL, victim.getAgility() - nextInt(victim.getAgility() / 2));
-		GrozLogger.logGame(aglilityv);
+		if (Groz.DEBUG)
+			GrozLogger.logGame(aglilityv);
 		double hitChan = (aglilitya / aglilityv);
 		if (hitChan < 0)
 		{
@@ -103,9 +115,11 @@ public class Attack {
 			hitChan -= 1d;
 		}
 		hitChan *= this.accuracy;
-		GrozLogger.logGame("Hit Chance: " + hitChan);
+		if (Groz.DEBUG)
+			GrozLogger.logGame("Hit Chance: " + hitChan);
 		double hitChan2 = rand.nextDouble();
-		GrozLogger.logGame("Hit Chance 2: " + hitChan2);
+		if (Groz.DEBUG)
+			GrozLogger.logGame("Hit Chance 2: " + hitChan2);
 		if (hitChan2 >= hitChan)
 		{
 			GrozLogger.logGame("Attack Missed!");
@@ -138,6 +152,7 @@ public class Attack {
 				}
 			}
 		}
+		GrozLogger.logGame("");
 	}
 	
 	private void addEffect(Attack attack, InGameEntity victim)
@@ -169,5 +184,16 @@ public class Attack {
 			b *= -1;
 		}
 		return rand.nextInt(b);
+	}
+	
+	public Attack setName(String name)
+	{
+		this.Name = name;
+		return this;
+	}
+	
+	public String getName()
+	{
+		return this.Name;
 	}
 }

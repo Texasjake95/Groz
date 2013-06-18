@@ -44,17 +44,12 @@ public class Monster extends Entity {
 	}
 	
 	@Override
-	public Monster addAttack(Attack attack)
+	public Monster addAttack(Attack attack, int index)
 	{
-		return (Monster) super.addAttack(attack);
+		return (Monster) super.addAttack(attack, index);
 	}
-	
-	public Monster addAttacks(Attack[] attacks)
-	{
-		for (Attack attack : attacks)
-		{
-			this.addAttack(attack);
-		}
-		return this;
-	}
+	/*
+	 * public Monster addAttacks(Attack[] attacks) { for (Attack attack :
+	 * attacks) { this.addAttack(attack); } return this; }
+	 */
 }

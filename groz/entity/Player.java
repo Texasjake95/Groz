@@ -28,9 +28,8 @@ public class Player extends Entity {
 	}
 	
 	@Override
-	public Player addAttack(Attack attack)
+	public Player addAttack(Attack attack, int index)
 	{
-		// TODO Auto-generated method stub
-		return (Player) super.addAttack(attack);
+		return (Player) super.addAttack(attack, index);
 	}
 }
