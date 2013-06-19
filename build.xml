@@ -1,0 +1,83 @@
+<?xml version="1.0" ?> 
+<project name="Groz" default="build">
+	
+	<property file="build_number.properties" prefix="build_number"/>
+	
+	<target name = "build">
+		<delete file = "Groz.jar" />
+		<antcall target="compile-build" />
+		<antcall target="package-build" />
+		<antcall target="clean" />
+	</target>
+	
+	<target name = "release">
+		<antcall target="increment_build_number"/>
+		<antcall target="compile-release" />
+		<antcall target="package-release" />
+		<antcall target="clean" />
+	</target>
+	
+	<target name="increment_build_number">
+		<propertyfile file="build_number.properties">
+			<entry key="major_number" type="int" default="1"/>
+			<entry key="minor_number" type="int" default="0"/>
+			<entry key="revision_number" type="int" operation="+" default="0"/>
+		</propertyfile>
+	</target>
+	
+	<target name = "compile-release">
+		<mkdir dir="src\" />
+		<mkdir dir="classes\" />
+		<copy todir="src\">
+			<fileset dir="groz\" />
+		</copy>
+		<antcall target="setVersion-release" />
+		<javac srcdir="src/" destdir="classes"/>
+	</target>
+	
+	<target name = "compile-build">
+		<mkdir dir="src\" />
+		<mkdir dir="classes\" />
+		<copy todir="src\">
+			<fileset dir="groz\" />
+		</copy>
+		<antcall target="setVersion-build" />
+		<javac srcdir="src/" destdir="classes"/>
+		
+	</target>
+	
+	<target name = "setVersion-release">
+		<replace dir="src" token="@VERSION@" value="${build_number.major_number}.${build_number.minor_number}.${build_number.revision_number}" />
+	</target>
+	
+	<target name = "setVersion-build">
+		<replace dir="src" token="@VERSION@" value="Local-Build" />
+	</target>
+	
+	<target name="package-release">
+		<mkdir dir="Releases\" />
+		<jar destfile="Releases\Groz-${build_number.major_number}.${build_number.minor_number}.${build_number.revision_number}.jar" level = "9">
+			<fileset dir="classes\" />
+			<manifest>
+				<attribute name="Main-Class" value="groz.Groz"/>
+				<attribute name="Author" value="Texasjake95"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="package-build">
+		<jar destfile="Groz.jar" level = "9" > 
+			<fileset dir="classes\"/>
+			<manifest>
+				<attribute name="Main-Class" value="groz.Groz"/>
+				<attribute name="Author" value="Texasjake95"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name = "clean">
+		<delete dir="src" />
+		<delete dir="classes" />
+	</target>
+	
+</project>

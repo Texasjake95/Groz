@@ -24,11 +24,13 @@ public class Groz {
 	private static Random rand = new Random();
 	public static Scanner mainScn;
 	public static final boolean DEBUG = false;
+	private static String version = "@VERSION@";
 	
 	public static void main(String[] args) throws SecurityException, IOException
 	{
 		mainScn = new Scanner(System.in);
 		GrozLogger.logGame("Logger Initallized");
+		GrozLogger.logGame(String.format("Groz Version: %s has started up", getVersion()));
 		GrozLogger.logGame("");
 		ZoneBase zone = null;
 		Ref.initStatTypes();
@@ -38,7 +40,7 @@ public class Groz {
 		player.addAttack(new Attack(1d, .75d, "Normal"), 0);
 		player.addAttack(new Attack(1d, .75d, "Strong"), 1);
 		player.addAttack(new Attack(.5d, 1d, "Light"), 2);
-		player.addAttack(new Attack(1d, .75d, "Heal"), 3);
+		player.addAttack(new Attack(1d, .75d, "Heal").setGivesDamage(false), 3);
 		gamePlayer = new InGamePlayer(player, 1);
 		for (int i = 0; i < 10; i++)
 		{
@@ -77,8 +79,16 @@ public class Groz {
 				GrozLogger.logGame("");
 				GrozLogger.logGame("");
 			}
-			mainScn.close();
+			
 		}
+		mainScn.close();
 		GrozLogger.logGame("Player health is " + gamePlayer.getHealth());
+	}
+
+	private static String getVersion()
+	{
+		if(!version.equals("@VER" + "SION@"))
+			return version;
+		return "Local Build";
 	}
 }
