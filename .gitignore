@@ -222,3 +222,6 @@ pip-log.txt
 *.log
 #*.jar
 *.class
+ant-release.bat
+Releases/
+build_number.properties

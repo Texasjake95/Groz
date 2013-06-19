@@ -14,7 +14,7 @@ public class Player extends Entity {
 	
 	public Player(String playername, int lvl)
 	{
-		super(playername, new Stats(0, 10, 2, 2, 2, 2));
+		super(playername, new Stats(0, 10, 4, 4, 4, 4));
 	}
 	
 	public void setLevel(int lvl)

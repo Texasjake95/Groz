@@ -7,6 +7,21 @@ Please note that this project may not ever be finished and could possibly be aba
 
 But in the mean time feel free to help anywhere possible! Happy Coding! :D
 
+PLEASE NOTE: All of the tests where preformed on the following systems:
+	-Windows XP (Texasjake95)
+
+	
+######Prerequisites 
+----
+All of the following need to be installed if you want to use this .bats
+	package.bat     ----> JDK
+	ant-package.bat ----> Apache Ant (Found at ant.apache.org)
+	start.bat       ----> Standard Java
+	
+All above prerequisites need to be able to be used from the command line.
+If you can't get it to work please google it before posting an issue!
+
+
 ######Branches
 ----
 dev-XXX is the branch that XXX pushes commits (i.e. I, Texasjake95, push my commits to dev-Texasjake95)
