@@ -32,7 +32,7 @@ public class Monster extends Entity {
 		super(name, stats);
 		if (monsterList[id] != null)
 		{
-			GrozLogger.logGame("While attempting to add " + this.getName() + ", the slot is occupied by " + monsterList[id].getName());
+			GrozLogger.logGame("While attempting to add " + this.getName() + ", the slot is occupied by " + monsterList[id].getName(), 0);
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		else

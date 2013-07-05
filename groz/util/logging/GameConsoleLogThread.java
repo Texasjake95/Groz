@@ -2,6 +2,7 @@ package groz.util.logging;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public class GameConsoleLogThread implements Runnable {
@@ -22,9 +23,8 @@ public class GameConsoleLogThread implements Runnable {
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace(GrozLogger.gameErrCache);
+				GrozLogger.logGame(Level.SEVERE, "An error has occured please look at the Groz.log for more details, Please show that log to the developer", true, 0);
 				Thread.interrupted();
-				// Stupid
 			}
 		}
 		while (true);

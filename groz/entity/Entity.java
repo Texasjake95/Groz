@@ -2,7 +2,6 @@ package groz.entity;
 
 import groz.Stats;
 import groz.entity.attack.Attack;
-import groz.util.logging.GrozLogger;
 
 /**
  * This is the base Entity
@@ -48,7 +47,6 @@ public class Entity {
 			{
 				if (this.attacks[x] != null)
 				{
-					GrozLogger.logGame(this.attacks[x].Name);
 					return this.attacks[x];
 				}
 			}

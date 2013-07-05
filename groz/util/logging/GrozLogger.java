@@ -1,5 +1,7 @@
 package groz.util.logging;
 
+import groz.util.InteractiveHelper;
+
 import java.io.File;
 import java.io.PrintStream;
 import java.util.logging.FileHandler;
@@ -16,7 +18,6 @@ public class GrozLogger {
 	public static Level GAME = new Game("inGame", Integer.MAX_VALUE / 2);
 	private static Thread gameConsoleLogThread;
 	public static PrintStream errCache;
-	public static PrintStream gameErrCache;
 	private static Logger grozLogger = Logger.getLogger("Groz");
 	private static Logger gameLogger = Logger.getLogger("GrozinGame");
 	private static boolean Init = false;
@@ -36,27 +37,28 @@ public class GrozLogger {
 	
 	public static void logInput(String msg)
 	{
-		init();
-		getLogger().log(Level.INFO, msg);
+		logGame(Level.INFO, msg, false, 0);
 	}
 	
-	public static void logGame(Level level, String msg)
+	public static void logGame(Level level, String msg, boolean showInGame, double timeDelay)
 	{
 		init();
-		getGameLogger().log(GAME, msg);
+		if (showInGame)
+		{
+			InteractiveHelper.gameWait_Sec(timeDelay);
+			getGameLogger().log(GAME, msg);
+		}
 		getLogger().log(level, msg);
 	}
 	
-	public static void logGame(String msg)
+	public static void logGame(String msg, double delay)
 	{
-		init();
-		getGameLogger().log(GAME, msg);
-		getLogger().log(GAME, msg);
+		logGame(GAME, msg, true, delay);
 	}
 	
-	public static void logGame(double doub)
+	public static void logGame(double doub, long delay)
 	{
-		logGame(doub + "");
+		logGame(doub + "", delay);
 	}
 	
 	public static Logger getLogger()
@@ -116,7 +118,6 @@ public class GrozLogger {
 				e.printStackTrace();
 			}
 			setGameHandlers(gameLogger, fileHandler);
-			gameErrCache = System.err;
 			System.setOut(new PrintStream(new LoggingOutStream(gameLogger), true));
 			gameInit = true;
 		}

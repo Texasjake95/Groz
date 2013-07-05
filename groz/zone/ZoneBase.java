@@ -25,7 +25,7 @@ public class ZoneBase {
 	{
 		if (zoneList[pair.getIntX()][pair.getIntY()] != null)
 		{
-			GrozLogger.logGame("There is already a Zone located at" + pair.getIntX() + ", " + pair.getIntY());
+			GrozLogger.logGame("There is already a Zone located at" + pair.getIntX() + ", " + pair.getIntY(), 0);
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		this.cords = pair;

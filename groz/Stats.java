@@ -12,14 +12,14 @@ import groz.entity.Entity;
 public class Stats {
 	
 	protected static int MAXLEVEL = 100;
-	private int MaxHealth;
-	private int Health;
-	private int HP;
-	private int ATK;
-	private int DEF;
-	private int SPD;
-	private int AGL;
-	private int BaseHealth;
+	protected int MaxHealth;
+	protected int Health;
+	protected int HP;
+	protected int ATK;
+	protected int DEF;
+	protected int SPD;
+	protected int AGL;
+	protected int BaseHealth;
 	
 	public Stats(int HP, int BaseHealth, int ATK, int DEF, int SPD, int AGL)
 	{

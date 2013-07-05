@@ -1,6 +1,7 @@
 package groz.util.logging;
 
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public class GameConsoleLogWrapper extends Handler {
@@ -15,7 +16,7 @@ public class GameConsoleLogWrapper extends Handler {
 		}
 		catch (InterruptedException e)
 		{
-			e.printStackTrace(GrozLogger.gameErrCache);
+			GrozLogger.logGame(Level.SEVERE, "An error has occured please look at the Groz.log for more details, Please show that log to the developer", true, 0);
 		}
 		if (currInt)
 		{

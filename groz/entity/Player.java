@@ -1,6 +1,6 @@
 package groz.entity;
 
-import groz.Stats;
+import groz.Groz;
 import groz.entity.attack.Attack;
 
 /**
@@ -14,7 +14,11 @@ public class Player extends Entity {
 	
 	public Player(String playername, int lvl)
 	{
-		super(playername, new Stats(0, 10, 4, 4, 4, 4));
+		super(playername, new PlayerStats(0, 10, 4, 4, 4, 4));
+		if (!Groz.saveFile.doesSaveFileHave("String.playerName"))
+		{
+			Groz.saveFile.setString("playerName", this.getName());
+		}
 	}
 	
 	public void setLevel(int lvl)
@@ -25,6 +29,12 @@ public class Player extends Entity {
 	public int getLevel()
 	{
 		return this.lvl;
+	}
+	
+	@Override
+	public PlayerStats getStats()
+	{
+		return (PlayerStats) super.getStats();
 	}
 	
 	@Override

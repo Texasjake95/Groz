@@ -7,6 +7,7 @@ import groz.entity.InGamePlayer;
 import groz.entity.Monster;
 import groz.entity.Player;
 import groz.entity.attack.Attack;
+import groz.util.InteractiveHelper;
 import groz.util.logging.GrozLogger;
 import groz.zone.ZoneBase;
 
@@ -14,7 +15,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 /**
- * This is the class that Groz uses to commence a battle
+ * This is the class that Groz uses to commence a this
  * 
  * @author Texasjake95
  */
@@ -43,24 +44,24 @@ public class Battle {
 		this.player = player;
 		crt = new Random();
 		rand = new Random();
-		GrozLogger.logGame("Zone " + zone.xCord() + ", " + zone.yCord());
+		GrozLogger.logGame("Zone " + zone.xCord() + ", " + zone.yCord(), .5);
 		monster = DynMonster.getDynLvl(player, zone);
-		GrozLogger.logGame(monster.getEntity().getName() + " has appeared!");
+		GrozLogger.logGame(monster.getEntity().getName() + " has appeared!", .5);
 		if (Groz.DEBUG)
 		{
-			GrozLogger.logGame("LVL: " + monster.getLevel());
-			GrozLogger.logGame("HP: " + monster.getHP());
+			GrozLogger.logGame("LVL: " + monster.getLevel(), 0);
+			GrozLogger.logGame("HP: " + monster.getHP(), 0);
 		}
-		GrozLogger.logGame("Health: " + monster.getHealth());
+		GrozLogger.logGame("Health: " + monster.getHealth(), .5);
 		if (Groz.DEBUG)
 		{
-			GrozLogger.logGame("ATK: " + monster.getAttack());
-			GrozLogger.logGame("DEF: " + monster.getDefense());
-			GrozLogger.logGame("SPD: " + monster.getSpeed());
-			GrozLogger.logGame("AGL: " + monster.getAgility());
-			GrozLogger.logGame(Level.INFO, "Is Player null:" + (this.player == null));
+			GrozLogger.logGame("ATK: " + monster.getAttack(), 0);
+			GrozLogger.logGame("DEF: " + monster.getDefense(), 0);
+			GrozLogger.logGame("SPD: " + monster.getSpeed(), 0);
+			GrozLogger.logGame("AGL: " + monster.getAgility(), 0);
+			GrozLogger.logGame(Level.INFO, "Is Player null:" + (this.player == null), false, 0);
 		}
-		GrozLogger.logGame("");
+		GrozLogger.logGame("", 0);
 	}
 	
 	/**
@@ -80,13 +81,39 @@ public class Battle {
 		}
 		else
 		{
-			GrozLogger.logGame("");
-			GrozLogger.logGame("Attacker: " + attacker.getEntity().getName());
-			GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth());
-			GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth());
-			GrozLogger.logGame(attacker.getEntity().getName() + " is paralyzed!");
+			GrozLogger.logGame("", 0);
+			GrozLogger.logGame("Attacker: " + attacker.getEntity().getName(), .5);
+			GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth(), .5);
+			GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth(), .5);
+			GrozLogger.logGame(attacker.getEntity().getName() + " is paralyzed!", .5);
 		}
 		attacker.setHealth((int) attacker.preformEffect(EnumStatType.Health, attacker.getHealth()));
+	}
+	
+	public void doTurn()
+	{
+		if (this.monster.preformEffect(EnumStatType.SPD, this.monster.getSpeed()) <= this.player.preformEffect(EnumStatType.SPD, this.player.getSpeed()))
+		{
+			if (!this.monster.isDead() && !this.player.isDead())
+			{
+				this.Attack(this.player, InteractiveHelper.getAttackIndex(this.player), this.monster);
+			}
+			if (!this.monster.isDead() && !this.player.isDead())
+			{
+				this.Attack(this.monster, 0, this.player);
+			}
+		}
+		else
+		{
+			if (!this.monster.isDead() && !this.player.isDead())
+			{
+				this.Attack(this.monster, 0, this.player);
+			}
+			if (!this.monster.isDead() && !this.player.isDead())
+			{
+				this.Attack(this.player, InteractiveHelper.getAttackIndex(this.player), this.monster);
+			}
+		}
 	}
 	
 	/**

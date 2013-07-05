@@ -1,7 +1,7 @@
 package groz.entity;
 
-import groz.Ref;
 import groz.entity.EnumMonsterType.EnumStatType;
+import groz.util.Ref;
 import groz.zone.ZoneBase;
 
 import java.util.ArrayList;
@@ -50,8 +50,7 @@ public class DynMonster extends InGameEntity {
 			case HP:
 			{
 				this.HP += 1;
-				this.MaxHealth += 5;
-				this.Health = this.MaxHealth;
+				this.Health = this.getMaxHealth();
 				break;
 			}
 			case ATK:

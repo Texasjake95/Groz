@@ -1,10 +1,12 @@
 package groz;
 
-import groz.entity.EnumMonsterType.EnumStatType;
 import groz.entity.InGamePlayer;
 import groz.entity.Player;
 import groz.entity.attack.Attack;
-import groz.util.InteractiveHelper;
+import groz.util.Ref;
+import groz.util.SaveFile;
+import groz.util.cheat.Cheat;
+import groz.util.cheat.CheatGod;
 import groz.util.logging.GrozLogger;
 import groz.zone.ZoneBase;
 
@@ -20,28 +22,62 @@ import java.util.Scanner;
 public class Groz {
 	
 	private static Player player;
-	private static InGamePlayer gamePlayer;
+	public static InGamePlayer gamePlayer;
 	private static Random rand = new Random();
 	public static Scanner mainScn;
 	public static final boolean DEBUG = false;
 	private static String version = "@VERSION@";
+	public static SaveFile saveFile;
+	public static String[] cheats;
 	
 	public static void main(String[] args) throws SecurityException, IOException
 	{
 		mainScn = new Scanner(System.in);
-		GrozLogger.logGame("Logger Initallized");
-		GrozLogger.logGame(String.format("Groz Version: %s has started up", getVersion()));
-		GrozLogger.logGame("");
+		GrozLogger.logGame("Logger Initallized", .25);
+		GrozLogger.logGame(String.format("Groz Version: %s has started up", getVersion()), .25);
+		GrozLogger.logGame("", .25);
+		initCheats();
+		cheats = Cheat.Names();
+		saveFile = new SaveFile();
+		if (args.length > 0)
+		{
+			if (saveFile.doesSaveFileHave("String.playerName"))
+			{
+				player = saveFile.createPlayer();
+			}
+			else
+			{
+				player = new Player(args[0], 1);
+				player.addAttack(new Attack(1d, .75d, "Normal"), 0);
+				player.addAttack(new Attack(1d, .75d, "Strong"), 1);
+				player.addAttack(new Attack(.5d, 1d, "Light"), 2);
+				player.addAttack(new Attack(1d, .75d, "Heal").setGivesDamage(false), 3);
+			}
+		}
+		else
+		{
+			if (saveFile.doesSaveFileHave("String.playerName"))
+			{
+				player = saveFile.createPlayer();
+			}
+			else
+			{
+				player = new Player("Zilx", 1);
+				player.addAttack(new Attack(1d, .75d, "Normal"), 0);
+				player.addAttack(new Attack(1d, .75d, "Strong"), 1);
+				player.addAttack(new Attack(.5d, 1d, "Light"), 2);
+				player.addAttack(new Attack(1d, .75d, "Heal").setGivesDamage(false), 3);
+			}
+		}
+		saveFile.save();
 		ZoneBase zone = null;
 		Ref.initStatTypes();
-		player = new Player("Zilx", 1);
-		player.setLevel(1);
-		player.getStats().addHP(5);
-		player.addAttack(new Attack(1d, .75d, "Normal"), 0);
-		player.addAttack(new Attack(1d, .75d, "Strong"), 1);
-		player.addAttack(new Attack(.5d, 1d, "Light"), 2);
-		player.addAttack(new Attack(1d, .75d, "Heal").setGivesDamage(false), 3);
-		gamePlayer = new InGamePlayer(player, 1);
+		if (!saveFile.doesSaveFileHave("Integer.playerHealth"))
+		{
+			saveFile.setInt("playerHealth", player.getStats().getMaxHealth());
+		}
+		gamePlayer = new InGamePlayer(player, saveFile.getInt("playerLevel"));
+		gamePlayer.setHealth(saveFile.getInt("playerHealth"));
 		for (int i = 0; i < 10; i++)
 		{
 			if (!gamePlayer.isDead())
@@ -50,45 +86,34 @@ public class Groz {
 				Battle battle = new Battle(gamePlayer, zone);
 				while (battle.canContinue())
 				{
-					if (battle.monster.preformEffect(EnumStatType.SPD, battle.monster.getSpeed()) <= gamePlayer.preformEffect(EnumStatType.SPD, gamePlayer.getSpeed()))
-					{
-						if (!battle.monster.isDead() && !gamePlayer.isDead())
-						{
-							battle.Attack(gamePlayer, InteractiveHelper.getAttackIndex(gamePlayer), battle.monster);
-						}
-						if (!battle.monster.isDead() && !gamePlayer.isDead())
-						{
-							battle.Attack(battle.monster, 0, gamePlayer);
-						}
-					}
-					else
-					{
-						if (!battle.monster.isDead() && !gamePlayer.isDead())
-						{
-							battle.Attack(battle.monster, 0, gamePlayer);
-						}
-						if (!battle.monster.isDead() && !gamePlayer.isDead())
-						{
-							battle.Attack(gamePlayer, InteractiveHelper.getAttackIndex(gamePlayer), battle.monster);
-						}
-					}
+					battle.doTurn();
 					gamePlayer = battle.player;
 				}
-				GrozLogger.logGame("");
-				GrozLogger.logGame("");
-				GrozLogger.logGame("");
-				GrozLogger.logGame("");
+				saveFile.save();
+				GrozLogger.logGame("", 0);
+				GrozLogger.logGame("", 0);
+				GrozLogger.logGame("", 0);
+				GrozLogger.logGame("", 0);
 			}
-			
 		}
 		mainScn.close();
-		GrozLogger.logGame("Player health is " + gamePlayer.getHealth());
+		GrozLogger.logGame("Player health is " + gamePlayer.getHealth(), 5);
 	}
-
+	
+	private static void initCheats()
+	{
+		new CheatGod();
+	}
+	
 	private static String getVersion()
 	{
-		if(!version.equals("@VER" + "SION@"))
+		if (!version.equals("@VER" + "SION@"))
 			return version;
 		return "Local Build";
+	}
+	
+	public static void activateCheat(String name)
+	{
+		Cheat.getCheatfromName(name).activateCheat();
 	}
 }

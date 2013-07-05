@@ -16,7 +16,6 @@ public class InGameEntity {
 	private Map<Effect, Integer> effects = new TreeMap<Effect, Integer>();
 	private Entity entity;
 	public int lvl;
-	protected int MaxHealth;
 	protected int Health;
 	protected int HP;
 	protected int ATK;
@@ -28,7 +27,8 @@ public class InGameEntity {
 	{
 		this.entity = entity;
 		this.lvl = lvl;
-		this.MaxHealth = entity.getStats().getMaxHealth();
+		if(this.lvl <=0)
+			this.lvl = 1;
 		this.Health = entity.getStats().getMaxHealth();
 		this.HP = entity.getStats().getHP();
 		this.ATK = entity.getStats().getAttack();
@@ -69,7 +69,7 @@ public class InGameEntity {
 	
 	public int getMaxHealth()
 	{
-		return this.MaxHealth;
+		return this.getHP() * 5 + this.entity.getStats().getBaseHealth();
 	}
 	
 	public int getSpeed()
@@ -98,10 +98,10 @@ public class InGameEntity {
 		int Defense = (int) this.preformEffect(EnumStatType.DEF, this.DEF - rand.nextInt(this.DEF / 2));
 		EAttack *= attack.getDamagePer();
 		if (Groz.DEBUG)
-			GrozLogger.logGame("Base Attack: " + EAttack);
+			GrozLogger.logGame("Base Attack: " + EAttack, 0);
 		if (isCrt)
 		{
-			GrozLogger.logGame("Critical Hit!");
+			GrozLogger.logGame("Critical Hit!", 0);
 			EAttack *= 1.50;
 		}
 		int damage = EAttack - Defense;
@@ -111,16 +111,18 @@ public class InGameEntity {
 		}
 		if (Groz.DEBUG)
 		{
-			GrozLogger.logGame("Attack: " + EAttack);
-			GrozLogger.logGame("Defense: " + Defense);
+			GrozLogger.logGame("Attack: " + EAttack, 0);
+			GrozLogger.logGame("Defense: " + Defense, 0);
 		}
-		GrozLogger.logGame("Damage: " + damage);
+		GrozLogger.logGame("Damage: " + damage, .5);
 		this.subtractHealth(damage);
 	}
 	
 	public void subtractHealth(int damage)
 	{
 		this.Health -= damage;
+		if(this.Health < 0)
+			this.Health = 0;
 	}
 	
 	public void heal(Attack attack, Random rand)
@@ -131,11 +133,11 @@ public class InGameEntity {
 		{
 			heal = 1;
 		}
-		GrozLogger.logGame("Heal:" + heal);
-		if (this.Health + heal < this.MaxHealth)
+		GrozLogger.logGame("Heal:" + heal, .5);
+		if (this.Health + heal < this.getMaxHealth())
 			this.Health += heal;
 		else
-			this.Health = this.MaxHealth;
+			this.Health = this.getMaxHealth();
 	}
 	
 	public boolean isDead()
@@ -146,7 +148,7 @@ public class InGameEntity {
 	public void addEffect(Effect effect, int i)
 	{
 		this.effects.put(effect, i);
-		GrozLogger.logGame("Is Paralyzed!");
+		GrozLogger.logGame("Is Paralyzed!", 1.5);
 	}
 	
 	public boolean hadAnyEffects()
@@ -184,5 +186,10 @@ public class InGameEntity {
 	public void setHealth(int health)
 	{
 		this.Health = health;
+	}
+	
+	public void setDead()
+	{
+		this.Health = 0;
 	}
 }

@@ -1,6 +1,6 @@
 package groz.entity;
 
-import groz.Ref;
+import groz.util.Ref;
 
 import java.util.ArrayList;
 

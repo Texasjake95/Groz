@@ -91,20 +91,20 @@ public class Attack {
 	
 	public void doAttack(InGameEntity attacker, InGameEntity victim)
 	{
-		GrozLogger.logGame("Attacker: " + attacker.getEntity().getName());
-		GrozLogger.logGame(attacker.getEntity().getName() + ": " + attacker.getHealth() + " HP");
-		GrozLogger.logGame(victim.getEntity().getName() + ": " + victim.getHealth() + " HP");
+		int ATKhealth = attacker.getHealth();
+		int VIChealth = victim.getHealth();
+		GrozLogger.logGame("Attacker: " + attacker.getEntity().getName(), .5);
 		if (Groz.DEBUG)
 		{
-			GrozLogger.logGame(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth());
-			GrozLogger.logGame(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth());
+			GrozLogger.logGame(attacker.getEntity().getName() + " MAX: " + attacker.getMaxHealth(), 0);
+			GrozLogger.logGame(victim.getEntity().getName() + " MAX: " + victim.getMaxHealth(), 0);
 		}
 		double aglilitya = attacker.preformEffect(EnumStatType.AGL, attacker.getAgility() - nextInt(attacker.getAgility() / 2));
 		if (Groz.DEBUG)
-			GrozLogger.logGame(aglilitya);
+			GrozLogger.logGame(aglilitya, 0);
 		double aglilityv = victim.preformEffect(EnumStatType.AGL, victim.getAgility() - nextInt(victim.getAgility() / 2));
 		if (Groz.DEBUG)
-			GrozLogger.logGame(aglilityv);
+			GrozLogger.logGame(aglilityv, 0);
 		double hitChan = (aglilitya / aglilityv);
 		if (hitChan < 0)
 		{
@@ -116,13 +116,13 @@ public class Attack {
 		}
 		hitChan *= this.accuracy;
 		if (Groz.DEBUG)
-			GrozLogger.logGame("Hit Chance: " + hitChan);
+			GrozLogger.logGame("Hit Chance: " + hitChan, 0);
 		double hitChan2 = rand.nextDouble();
 		if (Groz.DEBUG)
-			GrozLogger.logGame("Hit Chance 2: " + hitChan2);
+			GrozLogger.logGame("Hit Chance 2: " + hitChan2, 0);
 		if (hitChan2 >= hitChan)
 		{
-			GrozLogger.logGame("Attack Missed!");
+			GrozLogger.logGame("Attack Missed!", 1);
 		}
 		else
 		{
@@ -132,10 +132,12 @@ public class Attack {
 				{
 					victim.damage(attacker, this, rand, isCrt());
 					this.addEffect(this, victim);
+					GrozLogger.logGame(attacker.getEntity().getName() + " HP: " + ATKhealth + "->" + attacker.getHealth(), .5);
+					GrozLogger.logGame(victim.getEntity().getName() + " HP: " + VIChealth + "->" + victim.getHealth(), 1);
 				}
 				if (victim.isDead())
 				{
-					GrozLogger.logGame(victim.getEntity().getName() + " is dead");
+					GrozLogger.logGame(victim.getEntity().getName() + " is dead", 1);
 					victim = null;
 				}
 			}
@@ -145,14 +147,16 @@ public class Attack {
 				{
 					attacker.heal(this, rand);
 					this.addEffect(this, attacker);
+					GrozLogger.logGame(attacker.getEntity().getName() + " HP: " + ATKhealth + "->" + attacker.getHealth() + " HP", 1);
+					GrozLogger.logGame(victim.getEntity().getName() + " HP: " + VIChealth + "->" + victim.getHealth() + " HP", .5);
 				}
 				if (victim.isDead())
 				{
-					GrozLogger.logGame(attacker.getEntity().getName() + " is dead");
+					GrozLogger.logGame(attacker.getEntity().getName() + " is dead", 1);
 				}
 			}
 		}
-		GrozLogger.logGame("");
+		GrozLogger.logGame("", 0);
 	}
 	
 	private void addEffect(Attack attack, InGameEntity victim)
